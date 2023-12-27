@@ -12,6 +12,7 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.Nullable;
 
 public class AIGenPointer extends Mob {
@@ -36,8 +37,30 @@ public class AIGenPointer extends Mob {
         super.setInvulnerable(true);
     }
 
+
+
     @Override
     public boolean canBeCollidedWith() {
+        return false;
+    }
+
+    @Override
+    public boolean isPushedByFluid(FluidType type) {
+        return false;
+    }
+
+    @Override
+    public boolean isEffectiveAi() {
+        return false;
+    }
+
+    @Override
+    public void setNoGravity(boolean p_20243_) {
+        super.setNoGravity(true);
+    }
+
+    @Override
+    public boolean canBeSeenByAnyone() {
         return false;
     }
 

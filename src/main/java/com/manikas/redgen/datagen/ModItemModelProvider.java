@@ -17,7 +17,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        defaultTextured(ItemRegister.GENPOINTER_SPAWN_EGG);
+        withExistingParent(ItemRegister.GENPOINTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 
     private ItemModelBuilder defaultTextured(RegistryObject<Item> item) {
@@ -25,4 +25,5 @@ public class ModItemModelProvider extends ItemModelProvider {
         new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(RedGen.MOD_ID, "item/" + item.getId().getPath()));
     }
+
 }
