@@ -13,6 +13,6 @@ public class GenPointerRenderer extends MobRenderer<AIGenPointer,AIGenPointerMod
 
     @Override
     public ResourceLocation getTextureLocation(AIGenPointer p_114482_) {
-        return new ResourceLocation(RedGen.MOD_ID, "textures/ai_genpointer.png");
+        return new ResourceLocation(RedGen.MOD_ID, "textures/entity/ai_genpointer.png");
     }
 }

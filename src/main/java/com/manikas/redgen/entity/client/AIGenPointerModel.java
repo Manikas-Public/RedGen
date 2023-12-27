@@ -4,6 +4,8 @@ package com.manikas.redgen.entity.client;
 // Paste this class into your mod and generate all required imports
 
 
+import com.manikas.redgen.entity.AIGenPointer;
+import com.manikas.redgen.entity.animations.ModAnimationDefinitions;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
@@ -62,7 +64,8 @@ public class AIGenPointerModel<T extends Entity> extends HierarchicalModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		this.root().getAllParts().forEach(ModelPart::resetPose);
+		this.animate(((AIGenPointer) entity).placingBlock, ModAnimationDefinitions.PLACE_BLOCK, ageInTicks, 1f);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = RedGen.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEventBusClientEvents {
     @SubscribeEvent
-    public static void  registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event){
+    public static void  registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event){
         event.registerLayerDefinition(ModModelLayers.GENPOINTER_LAYER, AIGenPointerModel::createBodyLayer);
     }
 }

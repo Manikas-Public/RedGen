@@ -2,10 +2,12 @@ package com.manikas.redgen;
 
 import com.manikas.redgen.entity.EntityRegister;
 import com.manikas.redgen.entity.client.GenPointerRenderer;
+import com.manikas.redgen.item.ItemRegister;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -38,6 +40,7 @@ public class RedGen
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         EntityRegister.register(modEventBus);
+        ItemRegister.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -66,7 +69,9 @@ public class RedGen
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event){
-
+        if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS){
+            event.accept(ItemRegister.GENPOINTER_SPAWN_EGG);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

@@ -12,6 +12,6 @@ import net.minecraftforge.fml.common.Mod;
 public class ModEventBusNeutralEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event){
-        event.put(EntityRegister.GENPOINTER.get(), AIGenPointer.createLivingAttributes().build());
+        event.put(EntityRegister.GENPOINTER.get(), AIGenPointer.createAttributes().build());
     }
 }
