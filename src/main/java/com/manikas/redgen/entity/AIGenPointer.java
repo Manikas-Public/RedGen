@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.Nullable;
@@ -71,7 +72,6 @@ public class AIGenPointer extends Mob {
     @Override
     protected void registerGoals(){
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1,new LookAtPlayerGoal(this, Player.class, 2f));
     }
 
     public static AttributeSupplier.Builder createAttributes(){
