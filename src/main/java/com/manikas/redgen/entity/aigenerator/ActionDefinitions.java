@@ -24,7 +24,7 @@ public class ActionDefinitions extends AIGenPointer {
     }
 
     @SubscribeEvent
-    private void getEntity(EntityJoinLevelEvent event){
+    public void getEntity(EntityJoinLevelEvent event){
         if (event.getEntity() instanceof AIGenPointer) {
             pointerEntity = (AIGenPointer) event.getEntity();
         }
