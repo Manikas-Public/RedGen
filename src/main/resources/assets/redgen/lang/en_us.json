@@ -1,4 +1,7 @@
 {
   "item.redgen.ai_genpointer_spawn_egg": "AI Pointer Spawn Egg",
-  "creativetab.redgen_components": "AI Components"
+  "creativetab.redgen_components": "AI Components",
+  "output.redgen.remove.success": "Safely removed AI pointer",
+  "output.redgen.remove.fail": "Did not find present AI pointer",
+  "entity.redgen.ai_genpointer": "AI Pointer"
 }
