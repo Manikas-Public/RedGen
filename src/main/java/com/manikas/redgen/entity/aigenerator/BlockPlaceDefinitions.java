@@ -16,7 +16,7 @@ public class BlockPlaceDefinitions {
 
         Level pointerLevel = pointerToPlaceAt.level();
 
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal("Placing "+blockToPlace+" in dimension "+serverLevel+" can place : "+serverLevel.setBlock(placingPosition, Blocks.LIME_WOOL.defaultBlockState(),1|2)));
+        Minecraft.getInstance().player.sendSystemMessage(Component.literal("Placing "+blockToPlace+" in dimension "+serverLevel));
 
         switch (blockToPlace){
             case GREEN_WOOL -> serverLevel.setBlock(placingPosition, Blocks.LIME_WOOL.defaultBlockState(),1|2);
@@ -27,6 +27,7 @@ public class BlockPlaceDefinitions {
             case SLIME_BLOCK -> serverLevel.setBlock(placingPosition, Blocks.SLIME_BLOCK.defaultBlockState(),1|2);
             case REDSTONE_DUST -> serverLevel.setBlock(placingPosition, Blocks.REDSTONE_WIRE.defaultBlockState(),1|2);
             case REDSTONE_TORCH -> serverLevel.setBlock(placingPosition, Blocks.REDSTONE_TORCH.defaultBlockState(),1|2);
+            case REDSTONE_BLOCK -> serverLevel.setBlock(placingPosition, Blocks.REDSTONE_BLOCK.defaultBlockState(),1|2);
             case OBSERVER -> serverLevel.setBlock(placingPosition, Blocks.OBSERVER.defaultBlockState(),1|2);
             case REDSTONE_REPEATER_1 -> serverLevel.setBlock(placingPosition, Blocks.REPEATER.defaultBlockState(),1|2);
             case REDSTONE_REPEATER_2 -> serverLevel.setBlock(placingPosition, Blocks.REPEATER.defaultBlockState(),1|2);

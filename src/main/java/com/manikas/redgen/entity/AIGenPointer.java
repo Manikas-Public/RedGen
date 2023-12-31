@@ -4,6 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -34,13 +36,6 @@ public class AIGenPointer extends Mob {
     }
 
     @Override
-    public void setInvulnerable(boolean p_20332_) {
-        super.setInvulnerable(true);
-    }
-
-
-
-    @Override
     public boolean canBeCollidedWith() {
         return false;
     }
@@ -67,6 +62,15 @@ public class AIGenPointer extends Mob {
 
     private void setupAnimationStates(){
 
+    }
+
+    @Override
+    public boolean hurt(DamageSource p_21016_, float p_21017_) {
+        if(!p_21016_.is(DamageTypes.FELL_OUT_OF_WORLD) && !p_21016_.is(DamageTypes.GENERIC_KILL) && !p_21016_.is(DamageTypes.GENERIC) && !p_21016_.is(DamageTypes.MAGIC)){
+            return false;
+        }else {
+            return super.hurt(p_21016_,p_21017_);
+        }
     }
 
     @Override
