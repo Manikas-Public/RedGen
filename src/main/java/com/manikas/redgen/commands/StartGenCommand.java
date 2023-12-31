@@ -6,6 +6,8 @@ import com.manikas.redgen.entity.aigenerator.ActionDefinitions;
 import com.manikas.redgen.entity.aigenerator.ActionSet;
 import com.manikas.redgen.entity.aigenerator.BlockSet;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.sun.jdi.connect.Connector;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 
@@ -29,7 +31,7 @@ public class StartGenCommand {
     }
 
     public StartGenCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("redgen").then(Commands.literal("generate")
+        dispatcher.register(Commands.literal("redgen").then(Commands.literal("generate").then(Commands.argument("prompt", StringArgumentType.string()))
                 .executes(this::execute)));
     }
 
