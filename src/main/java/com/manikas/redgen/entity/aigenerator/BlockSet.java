@@ -27,5 +27,6 @@ public enum BlockSet {
     TARGET,
     STONE_BUTTON,
     OAK_BUTTON,
-    LEVER
+    LEVER,
+    NULL
 }

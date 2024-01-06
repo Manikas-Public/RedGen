@@ -15,7 +15,6 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = RedGen.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ActionDefinitions {
     public static DirSet selectedDir = DirSet.TURN_UP;
-    public static BlockSet selectedBlock = BlockSet.REDSTONE_BLOCK;
 
     @SubscribeEvent
     public static AIGenPointer getEntity(EntityJoinLevelEvent event){

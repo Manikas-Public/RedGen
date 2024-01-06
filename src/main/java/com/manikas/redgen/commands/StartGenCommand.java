@@ -13,6 +13,7 @@ import net.minecraft.commands.Commands;
 
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -38,8 +39,20 @@ public class StartGenCommand {
     private int execute(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
         String pointerName = useablePointerEntity.getName().toString();
-        ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity,BlockSet.GLASS, source.getLevel());
-        ActionDefinitions.performAction(ActionSet.PLACE,useablePointerEntity, BlockSet.REDSTONE_BLOCK, source.getLevel());
+
+        // TEST CASES FOR POINTER
+        ActionDefinitions.performAction(ActionSet.TURN_DOWN, useablePointerEntity, BlockSet.NULL, source.getLevel());
+        ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.DISPENSER, source.getLevel());
+        //ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
+        ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
+        ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.BARREL, source.getLevel());
+        ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
+        ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
+        ActionDefinitions.performAction(ActionSet.TURN_UP, useablePointerEntity, BlockSet.NULL, source.getLevel());
+        ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
+        ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
+        ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.STONE_BUTTON, source.getLevel());
+        // END OF TEST CASES
 
         context.getSource().sendSuccess(() -> Component.literal("Current entity " + pointerName + " at " + useablePointerEntity.getBlockX() + " " + useablePointerEntity.getBlockY() + " " + useablePointerEntity.getBlockZ()), true);
         return 1;
