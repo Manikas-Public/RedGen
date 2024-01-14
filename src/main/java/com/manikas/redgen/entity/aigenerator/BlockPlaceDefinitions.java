@@ -19,6 +19,9 @@ import net.minecraftforge.event.level.PistonEvent;
 
 public class BlockPlaceDefinitions {
     public static void placeBlock(DirSet specialDir, BlockSet blockToPlace, AIGenPointer pointerToPlaceAt, ServerLevel serverLevel){
+
+        AIGenPointer.isActing = true;
+
         BlockPos placingPosition = pointerToPlaceAt.blockPosition();
 
         Minecraft.getInstance().player.sendSystemMessage(Component.literal("Placing "+blockToPlace+" in dimension "+serverLevel));
@@ -279,5 +282,6 @@ public class BlockPlaceDefinitions {
             }
             case NULL -> Minecraft.getInstance().player.sendSystemMessage(Component.literal("Error : null provided as block to place"));
         }
+        AIGenPointer.isActing = false;
     }
 }

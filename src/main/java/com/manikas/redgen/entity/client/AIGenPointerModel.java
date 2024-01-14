@@ -16,6 +16,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import org.jetbrains.annotations.NotNull;
 
 public class AIGenPointerModel<T extends Entity> extends HierarchicalModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -65,7 +66,7 @@ public class AIGenPointerModel<T extends Entity> extends HierarchicalModel<T> {
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
-		this.animate(((AIGenPointer) entity).placingBlock, ModAnimationDefinitions.PLACE_BLOCK, ageInTicks, 1f);
+		this.animate(((AIGenPointer) entity).placingBlock, ModAnimationDefinitions.PLACE_BLOCK, ageInTicks);
 	}
 
 	@Override
@@ -76,6 +77,8 @@ public class AIGenPointerModel<T extends Entity> extends HierarchicalModel<T> {
 
 	@Override
 	public ModelPart root() {
-		return placer;
+		return bb_main;
 	}
+
+
 }

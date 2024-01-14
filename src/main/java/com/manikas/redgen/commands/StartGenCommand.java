@@ -8,6 +8,7 @@ import com.manikas.redgen.entity.aigenerator.BlockSet;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.sun.jdi.connect.Connector;
+import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 
@@ -26,19 +27,26 @@ public class StartGenCommand {
     public static void pointerEntitySpawn(EntityJoinLevelEvent event){
         if (useablePointerEntity == null) {
             useablePointerEntity = ActionDefinitions.getEntity(event);
+            if (useablePointerEntity != null) {
+                useablePointerEntity.setYBodyRot(0);
+                useablePointerEntity.setYRot(0);
+                useablePointerEntity.setXRot(0);
+                useablePointerEntity.setYHeadRot(0);
+            }
         }else if (ActionDefinitions.getEntity(event) != null){
             ActionDefinitions.getEntity(event).kill();
         }
     }
 
     public StartGenCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("redgen").then(Commands.literal("generate").then(Commands.argument("prompt", StringArgumentType.string()))
-                .executes(this::execute)));
+        dispatcher.register(Commands.literal("redgen").then(Commands.argument("gen_prompt", StringArgumentType.string()).executes(this::execute)));
     }
 
     private int execute(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
         String pointerName = useablePointerEntity.getName().toString();
+
+        Minecraft.getInstance().player.sendSystemMessage(Component.literal(StringArgumentType.getString(context, "gen_prompt")));
 
         // TEST CASES FOR POINTER
         ActionDefinitions.performAction(ActionSet.TURN_DOWN, useablePointerEntity, BlockSet.NULL, source.getLevel());

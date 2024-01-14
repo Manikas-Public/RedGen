@@ -23,6 +23,8 @@ public class AIGenPointer extends Mob {
         super(pEntityType, pLevel);
     }
 
+    public static boolean isActing = false;
+
     public final AnimationState placingBlock = new AnimationState();
     private int placingAnimTimeout = 0;
 
@@ -31,7 +33,7 @@ public class AIGenPointer extends Mob {
         super.tick();
 
         if (this.level().isClientSide()){
-
+            placingBlock.animateWhen(isActing,this.tickCount);
         }
     }
 
