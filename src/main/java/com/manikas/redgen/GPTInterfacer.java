@@ -64,7 +64,7 @@ public class GPTInterfacer {
             connection.setRequestProperty("Content-Type", "application/json");
 
             //Request
-            String requestParams = "{\"model\": \"" + aiType + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + rolePrompt + "\"}]}";
+            String requestParams = "{\"model\": \"" + aiType + "\", \"messages\": [{\"role\": \"system\", \"content\": \"" + rolePrompt + "\"}]}";
             connection.setDoOutput(true);
             //Out Code --> AI
             OutputStreamWriter streamWriter = new OutputStreamWriter(connection.getOutputStream());
