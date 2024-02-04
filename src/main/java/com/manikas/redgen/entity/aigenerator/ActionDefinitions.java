@@ -16,8 +16,24 @@ import net.minecraftforge.fml.common.Mod;
 public class ActionDefinitions {
     public static DirSet selectedDir = DirSet.TURN_UP;
 
+    public static AIGenPointer pointer = null;
+
     @SubscribeEvent
-    public static AIGenPointer getEntity(EntityJoinLevelEvent event){
+    public static void getPointer(EntityJoinLevelEvent event){
+        if (pointer == null) {
+            pointer = ActionDefinitions.getEntity(event);
+            if (pointer != null) {
+                pointer.setYBodyRot(0);
+                pointer.setYRot(0);
+                pointer.setXRot(0);
+                pointer.setYHeadRot(0);
+            }
+        }else if (ActionDefinitions.getEntity(event) != null){
+            ActionDefinitions.getEntity(event).kill();
+        }
+    }
+
+    private static AIGenPointer getEntity(EntityJoinLevelEvent event){
         if (event.getEntity() instanceof AIGenPointer) {
             return (AIGenPointer) event.getEntity();
         }else {

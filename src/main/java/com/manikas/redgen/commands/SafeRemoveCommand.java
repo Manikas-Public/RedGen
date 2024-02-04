@@ -16,19 +16,19 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = RedGen.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SafeRemoveCommand {
     public SafeRemoveCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("redgen").then(Commands.literal("saferemove")
-                .executes(this::execute)));
+        dispatcher.register(Commands.literal("saferemove")
+                .executes(this::execute));
     }
 
     private int execute(CommandContext<CommandSourceStack> context) {
-        if(StartGenCommand.useablePointerEntity != null) {
-            StartGenCommand.useablePointerEntity.kill();
-            StartGenCommand.useablePointerEntity = null;
+        if(ActionDefinitions.pointer != null) {
+            ActionDefinitions.pointer.kill();
+            ActionDefinitions.pointer = null;
 
             context.getSource().sendSuccess(() -> Component.translatable("output.redgen.remove.success"), true);
             return 1;
         }else {
-            context.getSource().sendSuccess(() -> Component.translatable("output.redgen.remove.fail"), true);
+            context.getSource().sendFailure(Component.translatable("output.redgen.remove.fail"));
             return -1;
         }
     }

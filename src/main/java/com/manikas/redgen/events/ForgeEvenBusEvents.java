@@ -2,6 +2,7 @@ package com.manikas.redgen.events;
 
 import com.manikas.redgen.RedGen;
 import com.manikas.redgen.commands.SafeRemoveCommand;
+import com.manikas.redgen.commands.ScanCommand;
 import com.manikas.redgen.commands.StartGenCommand;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,6 +15,7 @@ public class ForgeEvenBusEvents {
     public static void registerCommands(RegisterCommandsEvent event){
         new StartGenCommand(event.getDispatcher());
         new SafeRemoveCommand(event.getDispatcher());
+        new ScanCommand(event.getDispatcher());
 
         ConfigCommand.register(event.getDispatcher());
     }

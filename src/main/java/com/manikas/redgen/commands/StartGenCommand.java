@@ -22,20 +22,12 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = RedGen.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class StartGenCommand {
     private static final ActionDefinitions actionDefinitions = new ActionDefinitions();
-    public static AIGenPointer useablePointerEntity = null;
+
+    public static AIGenPointer useablePointerEntity;
+
     @SubscribeEvent
-    public static void pointerEntitySpawn(EntityJoinLevelEvent event){
-        if (useablePointerEntity == null) {
-            useablePointerEntity = ActionDefinitions.getEntity(event);
-            if (useablePointerEntity != null) {
-                useablePointerEntity.setYBodyRot(0);
-                useablePointerEntity.setYRot(0);
-                useablePointerEntity.setXRot(0);
-                useablePointerEntity.setYHeadRot(0);
-            }
-        }else if (ActionDefinitions.getEntity(event) != null){
-            ActionDefinitions.getEntity(event).kill();
-        }
+    public static void getPointer(EntityJoinLevelEvent event){
+        useablePointerEntity = ActionDefinitions.pointer;
     }
 
     public StartGenCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -44,25 +36,30 @@ public class StartGenCommand {
 
     private int execute(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
-        String pointerName = useablePointerEntity.getName().toString();
+        if (useablePointerEntity != null) {
+            String pointerName = useablePointerEntity.getName().toString();
 
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal(StringArgumentType.getString(context, "gen_prompt")));
+            Minecraft.getInstance().player.sendSystemMessage(Component.literal(StringArgumentType.getString(context, "gen_prompt")));
 
-        // TEST CASES FOR POINTER
-        ActionDefinitions.performAction(ActionSet.TURN_DOWN, useablePointerEntity, BlockSet.NULL, source.getLevel());
-        ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.DISPENSER, source.getLevel());
-        //ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
-        ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
-        ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.BARREL, source.getLevel());
-        ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
-        ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
-        ActionDefinitions.performAction(ActionSet.TURN_UP, useablePointerEntity, BlockSet.NULL, source.getLevel());
-        ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
-        ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
-        ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.STONE_BUTTON, source.getLevel());
-        // END OF TEST CASES
+            // TEST CASES FOR POINTER
+            ActionDefinitions.performAction(ActionSet.TURN_DOWN, useablePointerEntity, BlockSet.NULL, source.getLevel());
+            ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.DISPENSER, source.getLevel());
+            //ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
+            ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
+            ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.BARREL, source.getLevel());
+            ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
+            ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
+            ActionDefinitions.performAction(ActionSet.TURN_UP, useablePointerEntity, BlockSet.NULL, source.getLevel());
+            ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
+            ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
+            ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.STONE_BUTTON, source.getLevel());
+            // END OF TEST CASES
 
-        context.getSource().sendSuccess(() -> Component.literal("Current entity " + pointerName + " at " + useablePointerEntity.getBlockX() + " " + useablePointerEntity.getBlockY() + " " + useablePointerEntity.getBlockZ()), true);
-        return 1;
+            context.getSource().sendSuccess(() -> Component.literal("Current entity " + pointerName + " at " + useablePointerEntity.getBlockX() + " " + useablePointerEntity.getBlockY() + " " + useablePointerEntity.getBlockZ()), true);
+            return 1;
+        }else {
+            context.getSource().sendFailure(Component.literal("Failed : no pointer entity found"));
+            return -1;
+        }
     }
 }
