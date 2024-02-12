@@ -16,8 +16,8 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = RedGen.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SafeRemoveCommand {
     public SafeRemoveCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("saferemove")
-                .executes(this::execute));
+        dispatcher.register(Commands.literal("remove").then(Commands.literal("pointer")
+                .executes(this::execute)));
     }
 
     private int execute(CommandContext<CommandSourceStack> context) {
