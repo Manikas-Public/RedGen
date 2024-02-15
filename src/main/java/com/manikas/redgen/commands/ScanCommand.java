@@ -39,6 +39,14 @@ public class ScanCommand {
         dispatcher.register(Commands.literal("scan").then(Commands.argument("bounds1", BlockPosArgument.blockPos()).then(Commands.argument("bounds2", BlockPosArgument.blockPos()).then(Commands.argument("scan_name", StringArgumentType.string()).executes(this::execute)))));
     }
 
+    public static int toDirMultiplier_bool(boolean bool){
+        if (bool){
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
     private int execute(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
         if (useablePointerEntity != null) {
@@ -73,9 +81,9 @@ public class ScanCommand {
             List<BlockState> scannedBlocks = new ArrayList<BlockState>(repeatsx*repeatsy*repeatsz);
 
             for (int z = 0; z < repeatsz; z++) {
-                useablePointerEntity.setPos(x1, y1, z1 + indexY*(islessz? -1 : 1));
+                useablePointerEntity.setPos(x1, y1, z1 + indexY*toDirMultiplier_bool(islessz));
                 for (int y = 0; y < repeatsy; y++) {
-                    useablePointerEntity.setPos(x1, y + Math.floorDiv(indexX,repeatsy)*(islessy? -1 : 1), useablePointerEntity.getZ() + indexY*(islessz? -1 : 1));
+                    useablePointerEntity.setPos(x1, y1 + Math.floorDiv(indexX,repeatsx)*toDirMultiplier_bool(islessy), useablePointerEntity.getZ());
                     for (int x = indexX * repeatsx; x < repeatsx * indexX + repeatsx; x++) {
 //                        context.getSource().getLevel().getBlockState(new BlockPos(useablePointerEntity.getBlockX(), useablePointerEntity.getBlockY(), useablePointerEntity.getBlockZ())).getBlock() != Blocks.AIR
                         Minecraft.getInstance().player.sendSystemMessage(Component.literal("block"));
@@ -90,7 +98,7 @@ public class ScanCommand {
 //                            Minecraft.getInstance().player.sendSystemMessage(Component.literal("air"));
 //                            currentScan[x] = null;
 //                        }
-                        useablePointerEntity.setPos(new Vec3(useablePointerEntity.getBlockX() + (islessx? -1 : 1), useablePointerEntity.getBlockY(), useablePointerEntity.getBlockZ()));
+                        useablePointerEntity.setPos(new Vec3(useablePointerEntity.getBlockX() + toDirMultiplier_bool(islessx), useablePointerEntity.getBlockY(), useablePointerEntity.getBlockZ()));
                     }
                     Minecraft.getInstance().player.sendSystemMessage(Component.literal("Full Loop X " + indexX + " at " + useablePointerEntity.getBlockX() + " " + useablePointerEntity.getBlockY() + " " + useablePointerEntity.getBlockZ()));
                     indexX++;
@@ -98,6 +106,8 @@ public class ScanCommand {
                 Minecraft.getInstance().player.sendSystemMessage(Component.literal("Full Loop Y " + indexY + " at " + useablePointerEntity.getBlockX() + " " + useablePointerEntity.getBlockY() + " " + useablePointerEntity.getBlockZ()));
                 indexY++;
             }
+
+//            useablePointerEntity.setPos(new Vec3(useablePointerEntity.getBlockX() - 0.5, useablePointerEntity.getBlockY() + 0.5, useablePointerEntity.getBlockZ() - 0.5));
 
 //            Minecraft.getInstance().player.sendSystemMessage(Component.literal(currentScan[0].toString()));
             context.getSource().sendSuccess(() -> Component.literal("Finished scan " + "with first block as : " + scannedBlocks.get(0).getBlock() + "; at x " + useablePointerEntity.getBlockX() + " y " + useablePointerEntity.getBlockY() + " z " + useablePointerEntity.getBlockZ()), true);
