@@ -26,6 +26,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
+import java.io.File;
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(RedGen.MOD_ID)
 public class RedGen
@@ -36,6 +38,9 @@ public class RedGen
     private static final Logger LOGGER = LogUtils.getLogger();
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
+
+    public static File aiData = new File("C:\\Redgen_Data");
+
     public RedGen()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -69,6 +74,14 @@ public class RedGen
         LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
 
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+
+        // Setting up initial data directory
+
+        if (aiData.mkdir()) {
+            System.out.println("Sucessfully made Redgen Directory");
+        } else {
+            System.out.println("Error : failed Redgen Directory creation OR Directory already exists");
+        }
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event){

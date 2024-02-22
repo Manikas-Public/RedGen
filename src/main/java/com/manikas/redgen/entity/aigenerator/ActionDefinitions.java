@@ -73,4 +73,31 @@ public class ActionDefinitions {
                 BlockPlaceDefinitions.placeBlock(selectedDir,selectedPlaceable, pointerEntity, levelForPlacing);
         }
     }
+
+    public static ActionSet stringToAction(String stringAction) {
+        switch (stringAction) {
+            case "FORWARD" -> {
+                return ActionSet.FORWARD;
+            }
+            case "TURN_UP" -> {
+                return ActionSet.TURN_UP;
+            }
+            case "TURN_DOWN" -> {
+                return ActionSet.TURN_DOWN;
+            }
+            case "TURN_NORTH" -> {
+                return ActionSet.TURN_NORTH;
+            }
+            case "TURN_EAST" -> {
+                return ActionSet.TURN_EAST;
+            }
+            case "TURN_SOUTH" -> {
+                return ActionSet.TURN_SOUTH;
+            }
+            case "TURN_WEST" -> {
+                return ActionSet.TURN_WEST;
+            }
+        }
+        return ActionSet.PLACE;
+    }
 }

@@ -6,5 +6,6 @@ public enum DirSet {
     TURN_NORTH,
     TURN_EAST,
     TURN_SOUTH,
-    TURN_WEST
+    TURN_WEST,
+    NULL
 }

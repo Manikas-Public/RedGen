@@ -1,7 +1,7 @@
 {
-  "item.redgen.ai_genpointer_spawn_egg": "DI Žymeklis",
+  "item.redgen.ai_genpointer_spawn_egg": "DI žymeklis",
   "creativetab.redgen_components": "DI Komponentai",
-  "output.redgen.remove.success": "Saugiai panaikintas DI žymeklis",
-  "output.redgen.remove.fail": "Nerastas esamas DI žymeklis",
+  "cmd.redgen.remove.success": "Panaikintas DI žymeklis",
+  "cmd.redgen.nopointer_error": "Nepavyko atlikti komandos : nerastas DI žymeklis",
   "entity.redgen.ai_genpointer": "DI Žymeklis"
 }
