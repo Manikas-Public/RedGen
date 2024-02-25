@@ -1,7 +1,12 @@
 {
   "item.redgen.ai_genpointer_spawn_egg": "AI Pointer Spawn Egg",
   "creativetab.redgen_components": "AI Components",
-  "cmd.redgen.remove.success": "Safely removed AI pointer",
+  "cmd.redgen.remove.success": "Removed AI pointer",
   "cmd.redgen.nopointer_error": "Failed : Pointer not found",
-  "entity.redgen.ai_genpointer": "AI Pointer"
+  "entity.redgen.ai_genpointer": "AI Pointer",
+  "cmd.redgen.query_in_progress": "Generating - ",
+  "cmd.redgen.gen_success": "Finished generation at position",
+  "cmd.redgen.scan_success": "Created scan with name - ",
+  "cmd.redgen.general_error": "Error : ",
+  "cmd.redgen.scan_progress": "Scanning - "
 }

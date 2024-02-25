@@ -6,19 +6,19 @@ import com.manikas.redgen.entity.aigenerator.*;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -28,14 +28,16 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = RedGen.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ScanCommand {
+
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final ActionDefinitions actionDefinitions = new ActionDefinitions();
-    public static AIGenPointer useablePointerEntity;
+    public static AIGenPointer usablePointerEntity;
 
     public static String scanResult = null;
 
     @SubscribeEvent
     public static void getPointer(EntityJoinLevelEvent event){
-        useablePointerEntity = ActionDefinitions.pointer;
+        usablePointerEntity = ActionDefinitions.pointer;
     }
 
     public ScanCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -61,10 +63,12 @@ public class ScanCommand {
 
     private int execute(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
-        if (useablePointerEntity != null) {
-            String pointerName = useablePointerEntity.getName().toString();
+        if (usablePointerEntity != null) {
+            String pointerName = usablePointerEntity.getName().toString();
 
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal(StringArgumentType.getString(context, "scan_name")));
+            String scan_name = StringArgumentType.getString(context, "scan_name");
+
+            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("cmd.redgen.scan_progress").append(Component.literal(scan_name)));
 
             int repeatsx = Math.abs(BlockPosArgument.getBlockPos(context, "bounds1").getX() - BlockPosArgument.getBlockPos(context, "bounds2").getX()) + 1;
             int repeatsy = Math.abs(BlockPosArgument.getBlockPos(context, "bounds1").getY() - BlockPosArgument.getBlockPos(context, "bounds2").getY()) + 1;
@@ -84,43 +88,30 @@ public class ScanCommand {
 
             int indexX = 0;
             int indexY = 0;
-//            int indexZ = 0;
-
-//            BlockState[] currentScan = new BlockState[repeatsx*repeatsy*repeatsz];
 
             List<BlockArgs> scannedBlocks = new ArrayList<BlockArgs>(repeatsx*repeatsy*repeatsz);
 
-
             // Main scan loop
             for (int z = 0; z < repeatsz; z++) {
-                useablePointerEntity.setPos(x1, y1, z1 + Math.floorDiv(indexX, repeatsy)*toDirMultiplier_bool(islessz));
+                usablePointerEntity.setPos(x1, y1, z1 + Math.floorDiv(indexX, repeatsy)*toDirMultiplier_bool(islessz));
                 for (int y = 0; y < repeatsy; y++) {
-                    useablePointerEntity.setPos(x1, y1 + (indexX - Math.floorDiv(indexX, repeatsy)*repeatsy)*toDirMultiplier_bool(islessy), useablePointerEntity.getZ());
+                    usablePointerEntity.setPos(x1, y1 + (indexX - Math.floorDiv(indexX, repeatsy)*repeatsy)*toDirMultiplier_bool(islessy), usablePointerEntity.getZ());
                     for (int x = indexX * repeatsx; x < repeatsx * indexX + repeatsx; x++) {
-                        BlockState scannedBlockState = (context.getSource().getLevel().getBlockState(new BlockPos(useablePointerEntity.getBlockX(), useablePointerEntity.getBlockY(), useablePointerEntity.getBlockZ())));
+                        BlockState scannedBlockState = (context.getSource().getLevel().getBlockState(new BlockPos(usablePointerEntity.getBlockX(), usablePointerEntity.getBlockY(), usablePointerEntity.getBlockZ())));
                         BlockArgs scannedBlockProperties = ScanConverter.toBlockArgs(scannedBlockState);
 
-                        scannedBlocks.add(new BlockArgs(scannedBlockProperties.getDefinition(), scannedBlockProperties.getRotation(), new BlockPos(useablePointerEntity.getBlockX(), useablePointerEntity.getBlockY(), useablePointerEntity.getBlockZ())));
+                        scannedBlocks.add(new BlockArgs(scannedBlockProperties.getDefinition(), scannedBlockProperties.getRotation(), new BlockPos(usablePointerEntity.getBlockX(), usablePointerEntity.getBlockY(), usablePointerEntity.getBlockZ())));
 
-                        //debug
-                        ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.GLASS, source.getLevel());
-
-                        useablePointerEntity.setPos(new Vec3(useablePointerEntity.getBlockX() + toDirMultiplier_bool(islessx), useablePointerEntity.getBlockY(), useablePointerEntity.getBlockZ()));
+                        usablePointerEntity.setPos(new Vec3(usablePointerEntity.getBlockX() + toDirMultiplier_bool(islessx), usablePointerEntity.getBlockY(), usablePointerEntity.getBlockZ()));
                     }
-                    Minecraft.getInstance().player.sendSystemMessage(Component.literal("Full Loop X " + indexX + " at " + useablePointerEntity.getBlockX() + " " + useablePointerEntity.getBlockY() + " " + useablePointerEntity.getBlockZ()));
+                    LOGGER.info("Scanning reached new X index at " + usablePointerEntity.getBlockX() + usablePointerEntity.getBlockY() + usablePointerEntity.getBlockZ());
                     indexX++;
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
                 }
                 indexY++;
-                Minecraft.getInstance().player.sendSystemMessage(Component.literal("Full Loop Y " + indexY + " at " + useablePointerEntity.getBlockX() + " " + useablePointerEntity.getBlockY() + " " + useablePointerEntity.getBlockZ()));
             }
 
             // Consolidation process loop
-            scanResult = StringArgumentType.getString(context, "scan_name") + ",";
+            scanResult = scan_name + ",";
 
             StringBuilder scanBuilder = new StringBuilder(scanResult);
 
@@ -196,34 +187,32 @@ public class ScanCommand {
 
             // Saving scanResult file
 
-            File scanOut  = new File("C:\\Redgen_Data\\" + StringArgumentType.getString(context, "scan_name") + ".txt");
+            File scanOut  = new File("C:\\Redgen_Data\\" + scan_name + ".txt");
 
             try {
                 if (scanOut.createNewFile()) {
-                    System.out.println("Created new DataSet : " + scanOut.getName());
+                    LOGGER.info("Created new scanResult : " + scanOut.getName());
                 } else {
-                    System.out.println("DataSet already exists");
+                    LOGGER.warn("Scan already exists");
                 }
             } catch (IOException e) {
-                System.out.println("Error : failed creating DataSet - " + scanOut.getName() + "; " + e);
+                LOGGER.error("Error : failed creating scanResult - " + scanOut.getName() + "; " + e);
             }
 
             // Writing to scanResult
 
             try {
-                FileWriter scanWriter = new FileWriter("C:\\Redgen_Data\\" + StringArgumentType.getString(context, "scan_name") + ".txt");
+                FileWriter scanWriter = new FileWriter("C:\\Redgen_Data\\" + scan_name + ".txt");
                 scanWriter.write(scanResult);
                 scanWriter.close();
-                System.out.println("Successfully written scanResults to - " + scanWriter);
+                LOGGER.info("Successfully written scanResults to - " + scanWriter);
             } catch (IOException e) {
-                System.out.println("Error : failed writing to DataSet - " + scanOut.getName() + "; " + e);
+                LOGGER.error("Error : failed writing to scanResult - " + scanOut.getName() + "; " + e);
             }
 
-            // Finishing function
-
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("Finished scan (length - " + scannedBlocks.size() + ")" + "with resulting string : " + scanResult));
-
-            context.getSource().sendSuccess(() -> Component.literal("Last Pointer position" + " at : x " + useablePointerEntity.getBlockX() + " y " + useablePointerEntity.getBlockY() + " z " + useablePointerEntity.getBlockZ()), true);
+            // Finishing
+            context.getSource().sendSuccess(() -> Component.translatable("cmd.redgen.scan_success").append(Component.literal(scan_name + " X : " + usablePointerEntity.getBlockX() + " Y : " + usablePointerEntity.getBlockY() + " Z : " + usablePointerEntity.getBlockZ())), true);
+            LOGGER.info("Finished scan " + scan_name + " at " + usablePointerEntity.getBlockX() + usablePointerEntity.getBlockY() + usablePointerEntity.getBlockZ());
             return 1;
         }else {
             context.getSource().sendFailure(Component.translatable("cmd.redgen.nopointer_error"));

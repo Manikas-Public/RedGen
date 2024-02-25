@@ -2,12 +2,10 @@ package com.manikas.redgen.commands;
 
 import com.manikas.redgen.RedGen;
 import com.manikas.redgen.entity.AIGenPointer;
-import com.manikas.redgen.entity.aigenerator.ActionDefinitions;
-import com.manikas.redgen.entity.aigenerator.ActionSet;
-import com.manikas.redgen.entity.aigenerator.BlockPlaceDefinitions;
-import com.manikas.redgen.entity.aigenerator.BlockSet;
+import com.manikas.redgen.entity.aigenerator.*;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.logging.LogUtils;
 import com.sun.jdi.connect.Connector;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
@@ -19,6 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.slf4j.Logger;
 
 import java.io.Console;
 import java.io.File;
@@ -28,6 +27,8 @@ import java.util.Scanner;
 
 @Mod.EventBusSubscriber(modid = RedGen.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class StartGenCommand {
+
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final ActionDefinitions actionDefinitions = new ActionDefinitions();
 
     public static AIGenPointer useablePointerEntity;
@@ -43,30 +44,20 @@ public class StartGenCommand {
 
     private int execute(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
+
+        String genPrompt = StringArgumentType.getString(context, "gen_prompt");
+
         if (useablePointerEntity != null) {
             String pointerName = useablePointerEntity.getName().toString();
 
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal(StringArgumentType.getString(context, "gen_prompt")));
+            Minecraft.getInstance().player.sendSystemMessage(Component.translatable("cmd.redgen.query_in_progress").append(Component.literal(genPrompt)));
+            LOGGER.info("Generating " + genPrompt);
 
-            StringBuilder outputStringBuilder = new StringBuilder();
-            String currentData = null;
-
-            try {
-                File selectedData = new File("C:\\Redgen_Data\\" + StringArgumentType.getString(context, "gen_prompt") + ".txt");
-                Scanner outputReader = new Scanner(selectedData);
-                while (outputReader.hasNextLine()) {
-                    currentData = outputReader.nextLine();
-                    outputStringBuilder.append(currentData);
-                }
-                outputReader.close();
-            } catch (FileNotFoundException e) {
-                System.out.println("Error : DataSet with name : " + StringArgumentType.getString(context, "gen_prompt") + " not found; " + e);
-            }
-
-            String outputString = outputStringBuilder.toString();
-
+            // calls Llama-Index and gets response in a string, then splits by "," symbol
+            String outputString = GPTQueryLauncher.queryAI(genPrompt);
             String[] outputStringArray = outputString.split(",");
 
+            // pointer carries out actions
             int actionIndex = 0;
 
             for (String c : outputStringArray) {
@@ -82,21 +73,8 @@ public class StartGenCommand {
                 actionIndex++;
             }
 
-//            // TEST CASES FOR POINTER
-//            ActionDefinitions.performAction(ActionSet.TURN_DOWN, useablePointerEntity, BlockSet.NULL, source.getLevel());
-//            ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.DISPENSER, source.getLevel());
-//            //ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
-//            ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
-//            ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.BARREL, source.getLevel());
-//            ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
-//            ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
-//            ActionDefinitions.performAction(ActionSet.TURN_UP, useablePointerEntity, BlockSet.NULL, source.getLevel());
-//            ActionDefinitions.performAction(ActionSet.FORWARD, useablePointerEntity, BlockSet.NULL, source.getLevel());
-//            ActionDefinitions.performAction(ActionSet.TURN_NORTH, useablePointerEntity, BlockSet.NULL, source.getLevel());
-//            ActionDefinitions.performAction(ActionSet.PLACE, useablePointerEntity, BlockSet.STONE_BUTTON, source.getLevel());
-//            // END OF TEST CASES
-
-            context.getSource().sendSuccess(() -> Component.literal("Current entity " + pointerName + " at " + useablePointerEntity.getBlockX() + " " + useablePointerEntity.getBlockY() + " " + useablePointerEntity.getBlockZ()), true);
+            context.getSource().sendSuccess(() -> Component.translatable("cmd.redgen.gen_success").append(Component.literal(" X : " + useablePointerEntity.getBlockX()+ " Y : " + useablePointerEntity.getBlockY()+ " Z : " + useablePointerEntity.getBlockZ())), true);
+            LOGGER.info("Finished generating " + genPrompt);
             return 1;
         }else {
             context.getSource().sendFailure(Component.translatable("cmd.redgen.nopointer_error"));

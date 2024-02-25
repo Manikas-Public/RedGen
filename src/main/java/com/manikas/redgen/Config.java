@@ -28,10 +28,6 @@ public class Config
             .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), Config::validateItemName);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
-
-    public static boolean logDirtBlock;
-    public static int magicNumber;
-    public static String magicNumberIntroduction;
     public static Set<Item> items;
 
     private static boolean validateItemName(final Object obj)
@@ -42,7 +38,6 @@ public class Config
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
     {
-        magicNumberIntroduction = DATASET_PATH.get();
 
         // convert the list of strings into a set of items
         items = ITEM_STRINGS.get().stream()

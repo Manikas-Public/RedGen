@@ -3,5 +3,10 @@
   "creativetab.redgen_components": "DI Komponentai",
   "cmd.redgen.remove.success": "Panaikintas DI žymeklis",
   "cmd.redgen.nopointer_error": "Nepavyko atlikti komandos : nerastas DI žymeklis",
-  "entity.redgen.ai_genpointer": "DI Žymeklis"
+  "entity.redgen.ai_genpointer": "DI Žymeklis",
+  "cmd.redgen.query_in_progress": "Generuojamas - ",
+  "cmd.redgen.gen_success": "Sėkmingai sugeneruota pozicijoje",
+  "cmd.redgen.scan_success": "Baigtas skenavimas pavadinimu - ",
+  "cmd.redgen.general_error": "Klaida : ",
+  "cmd.redgen.scan_progress": "Skenuojamas - "
 }
