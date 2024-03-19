@@ -91,7 +91,7 @@ public class RedGen
                     index = load_index_from_storage(storedindex)
 
                 queryer = index.as_query_engine()
-                response = queryer.query("Give sequence of actions, each separated by a comma, that has a name similar to : " + prompt)
+                response = queryer.query("Create or give any sequence of actions, if there are 2 identical sequences then pick one, each action has to be separated by a comma. Do that based on this prompt : " + prompt)
 
                 print(response)
                 """;

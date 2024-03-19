@@ -9,10 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.piston.PistonBaseBlock;
-import net.minecraft.world.level.block.state.properties.AttachFace;
-import net.minecraft.world.level.block.state.properties.ComparatorMode;
-import net.minecraft.world.level.block.state.properties.PistonType;
-import net.minecraft.world.level.block.state.properties.SlabType;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.levelgen.feature.stateproviders.RotatedBlockProvider;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.level.PistonEvent;
@@ -66,36 +63,10 @@ public class BlockPlaceDefinitions {
                 }
             }
             case PISTON -> {
-//                switch (specialDir) {
-//                    case TURN_UP ->
-                            serverLevel.setBlock(placingPosition, Blocks.PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, pointerToDir(specialDir)), 1 | 2);
-//                    case TURN_DOWN ->
-//                            serverLevel.setBlock(placingPosition, Blocks.PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, Direction.DOWN), 1 | 2);
-//                    case TURN_NORTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, Direction.NORTH), 1 | 2);
-//                    case TURN_EAST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, Direction.EAST), 1 | 2);
-//                    case TURN_SOUTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, Direction.SOUTH), 1 | 2);
-//                    case TURN_WEST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, Direction.WEST), 1 | 2);
-//                }
+                serverLevel.setBlock(placingPosition, Blocks.PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, pointerToDir(specialDir)), 1 | 2);
             }
             case STICKY_PISTON -> {
-//                switch (specialDir) {
-//                    case TURN_UP ->
                             serverLevel.setBlock(placingPosition, Blocks.STICKY_PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, pointerToDir(specialDir)), 1 | 2);
-//                    case TURN_DOWN ->
-//                            serverLevel.setBlock(placingPosition, Blocks.STICKY_PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, Direction.DOWN), 1 | 2);
-//                    case TURN_NORTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.STICKY_PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, Direction.NORTH), 1 | 2);
-//                    case TURN_EAST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.STICKY_PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, Direction.EAST), 1 | 2);
-//                    case TURN_SOUTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.STICKY_PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, Direction.SOUTH), 1 | 2);
-//                    case TURN_WEST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.STICKY_PISTON.defaultBlockState().setValue(PistonBaseBlock.FACING, Direction.WEST), 1 | 2);
-//                }
             }
             case SLIME_BLOCK -> serverLevel.setBlock(placingPosition, Blocks.SLIME_BLOCK.defaultBlockState(),1|2);
             case REDSTONE_DUST -> serverLevel.setBlock(placingPosition, Blocks.REDSTONE_WIRE.defaultBlockState(),1|2);
@@ -105,29 +76,10 @@ public class BlockPlaceDefinitions {
                             serverLevel.setBlock(placingPosition, Blocks.REDSTONE_TORCH.defaultBlockState(), 1 | 2);
                     case TURN_NORTH ->
                             serverLevel.setBlock(placingPosition, Blocks.REDSTONE_WALL_TORCH.defaultBlockState().setValue(RedstoneWallTorchBlock.FACING, pointerToDir(specialDir)), 1 | 2);
-//                    case TURN_EAST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.REDSTONE_WALL_TORCH.defaultBlockState().setValue(RedstoneWallTorchBlock.FACING, Direction.EAST), 1 | 2);
-//                    case TURN_SOUTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.REDSTONE_WALL_TORCH.defaultBlockState().setValue(RedstoneWallTorchBlock.FACING, Direction.SOUTH), 1 | 2);
-//                    case TURN_WEST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.REDSTONE_WALL_TORCH.defaultBlockState().setValue(RedstoneWallTorchBlock.FACING, Direction.WEST), 1 | 2);
                 }
             }
             case OBSERVER -> {
-//                switch (specialDir) {
-//                    case TURN_UP ->
-                            serverLevel.setBlock(placingPosition, Blocks.OBSERVER.defaultBlockState().setValue(ObserverBlock.FACING, pointerToDir(specialDir)), 1 | 2);
-//                    case TURN_DOWN ->
-//                            serverLevel.setBlock(placingPosition, Blocks.OBSERVER.defaultBlockState().setValue(ObserverBlock.FACING, Direction.DOWN), 1 | 2);
-//                    case TURN_NORTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.OBSERVER.defaultBlockState().setValue(ObserverBlock.FACING, Direction.NORTH), 1 | 2);
-//                    case TURN_EAST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.OBSERVER.defaultBlockState().setValue(ObserverBlock.FACING, Direction.EAST), 1 | 2);
-//                    case TURN_SOUTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.OBSERVER.defaultBlockState().setValue(ObserverBlock.FACING, Direction.SOUTH), 1 | 2);
-//                    case TURN_WEST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.OBSERVER.defaultBlockState().setValue(ObserverBlock.FACING, Direction.WEST), 1 | 2);
-//                }
+                serverLevel.setBlock(placingPosition, Blocks.OBSERVER.defaultBlockState().setValue(ObserverBlock.FACING, pointerToDir(specialDir)), 1 | 2);
             }
             case REDSTONE_BLOCK -> serverLevel.setBlock(placingPosition, Blocks.REDSTONE_BLOCK.defaultBlockState(),1|2);
             case REDSTONE_REPEATER_1 -> {
@@ -209,56 +161,16 @@ public class BlockPlaceDefinitions {
                             serverLevel.setBlock(placingPosition, Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, Direction.DOWN), 1 | 2);
                     case TURN_NORTH, TURN_EAST, TURN_SOUTH, TURN_WEST ->
                             serverLevel.setBlock(placingPosition, Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, pointerToDir(specialDir)),1|2);
-//                    case TURN_EAST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, Direction.EAST),1|2);
-//                    case TURN_SOUTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, Direction.SOUTH),1|2);
-//                    case TURN_WEST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, Direction.WEST),1|2);
                 }
             }
             case DISPENSER -> {
-//                switch (specialDir) {
-//                    case TURN_UP ->
-                            serverLevel.setBlock(placingPosition, Blocks.DISPENSER.defaultBlockState().setValue(DispenserBlock.FACING, pointerToDir(specialDir)), 1 | 2);
-//                    case TURN_DOWN ->
-//                            serverLevel.setBlock(placingPosition, Blocks.DISPENSER.defaultBlockState().setValue(DispenserBlock.FACING, Direction.DOWN), 1 | 2);
-//                    case TURN_NORTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.DISPENSER.defaultBlockState().setValue(DispenserBlock.FACING, Direction.NORTH), 1 | 2);
-//                    case TURN_EAST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.DISPENSER.defaultBlockState().setValue(DispenserBlock.FACING, Direction.EAST), 1 | 2);
-//                    case TURN_SOUTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.DISPENSER.defaultBlockState().setValue(DispenserBlock.FACING, Direction.SOUTH), 1 | 2);
-//                    case TURN_WEST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.DISPENSER.defaultBlockState().setValue(DispenserBlock.FACING, Direction.WEST), 1 | 2);
-//                }
+                serverLevel.setBlock(placingPosition, Blocks.DISPENSER.defaultBlockState().setValue(DispenserBlock.FACING, pointerToDir(specialDir)), 1 | 2);
             }
             case DROPPER -> {
-//                switch (specialDir) {
-//                    case TURN_UP ->
-                            serverLevel.setBlock(placingPosition, Blocks.DROPPER.defaultBlockState().setValue(DropperBlock.FACING, pointerToDir(specialDir)), 1 | 2);
-//                    case TURN_DOWN ->
-//                            serverLevel.setBlock(placingPosition, Blocks.DROPPER.defaultBlockState().setValue(DropperBlock.FACING, Direction.DOWN), 1 | 2);
-//                    case TURN_NORTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.DROPPER.defaultBlockState().setValue(DropperBlock.FACING, Direction.NORTH), 1 | 2);
-//                    case TURN_EAST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.DROPPER.defaultBlockState().setValue(DropperBlock.FACING, Direction.EAST), 1 | 2);
-//                    case TURN_SOUTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.DROPPER.defaultBlockState().setValue(DropperBlock.FACING, Direction.SOUTH), 1 | 2);
-//                    case TURN_WEST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.DROPPER.defaultBlockState().setValue(DropperBlock.FACING, Direction.WEST), 1 | 2);
-//                }
+                serverLevel.setBlock(placingPosition, Blocks.DROPPER.defaultBlockState().setValue(DropperBlock.FACING, pointerToDir(specialDir)), 1 | 2);
             }
             case BARREL -> {
-//                switch (specialDir) {
-//                    case TURN_UP ->
-                            serverLevel.setBlock(placingPosition, Blocks.BARREL.defaultBlockState().setValue(BarrelBlock.FACING, pointerToDir(specialDir)), 1 | 2);
-//                    case TURN_DOWN -> serverLevel.setBlock(placingPosition, Blocks.BARREL.defaultBlockState().setValue(BarrelBlock.FACING, Direction.DOWN), 1 | 2);
-//                    case TURN_NORTH -> serverLevel.setBlock(placingPosition, Blocks.BARREL.defaultBlockState().setValue(BarrelBlock.FACING, Direction.NORTH), 1 | 2);
-//                    case TURN_EAST -> serverLevel.setBlock(placingPosition, Blocks.BARREL.defaultBlockState().setValue(BarrelBlock.FACING, Direction.EAST), 1 | 2);
-//                    case TURN_SOUTH -> serverLevel.setBlock(placingPosition, Blocks.BARREL.defaultBlockState().setValue(BarrelBlock.FACING, Direction.SOUTH), 1 | 2);
-//                    case TURN_WEST -> serverLevel.setBlock(placingPosition, Blocks.BARREL.defaultBlockState().setValue(BarrelBlock.FACING, Direction.WEST), 1 | 2);
-//                }
+                serverLevel.setBlock(placingPosition, Blocks.BARREL.defaultBlockState().setValue(BarrelBlock.FACING, pointerToDir(specialDir)), 1 | 2);
             }
             case TARGET -> serverLevel.setBlock(placingPosition, Blocks.TARGET.defaultBlockState(),1|2);
             case STONE_BUTTON -> {
@@ -269,12 +181,6 @@ public class BlockPlaceDefinitions {
                             serverLevel.setBlock(placingPosition, Blocks.STONE_BUTTON.defaultBlockState().setValue(ButtonBlock.FACE, AttachFace.FLOOR), 1 | 2);
                     case TURN_NORTH, TURN_EAST, TURN_SOUTH, TURN_WEST ->
                             serverLevel.setBlock(placingPosition, Blocks.STONE_BUTTON.defaultBlockState().setValue(ButtonBlock.FACE, AttachFace.WALL).setValue(ButtonBlock.FACING, pointerToDir(specialDir)), 1 | 2);
-//                    case TURN_EAST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.STONE_BUTTON.defaultBlockState().setValue(ButtonBlock.FACE, AttachFace.WALL).setValue(ButtonBlock.FACING, Direction.EAST), 1 | 2);
-//                    case TURN_SOUTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.STONE_BUTTON.defaultBlockState().setValue(ButtonBlock.FACE, AttachFace.WALL).setValue(ButtonBlock.FACING, Direction.SOUTH), 1 | 2);
-//                    case TURN_WEST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.STONE_BUTTON.defaultBlockState().setValue(ButtonBlock.FACE, AttachFace.WALL).setValue(ButtonBlock.FACING,Direction.WEST), 1 | 2);
                 }
             }
             case OAK_BUTTON -> {
@@ -285,12 +191,6 @@ public class BlockPlaceDefinitions {
                             serverLevel.setBlock(placingPosition, Blocks.OAK_BUTTON.defaultBlockState().setValue(ButtonBlock.FACE, AttachFace.FLOOR), 1 | 2);
                     case TURN_NORTH, TURN_EAST, TURN_SOUTH, TURN_WEST ->
                             serverLevel.setBlock(placingPosition, Blocks.OAK_BUTTON.defaultBlockState().setValue(ButtonBlock.FACE, AttachFace.WALL).setValue(ButtonBlock.FACING, pointerToDir(specialDir)), 1 | 2);
-//                    case TURN_EAST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.OAK_BUTTON.defaultBlockState().setValue(ButtonBlock.FACE, AttachFace.WALL).setValue(ButtonBlock.FACING, Direction.EAST), 1 | 2);
-//                    case TURN_SOUTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.OAK_BUTTON.defaultBlockState().setValue(ButtonBlock.FACE, AttachFace.WALL).setValue(ButtonBlock.FACING, Direction.SOUTH), 1 | 2);
-//                    case TURN_WEST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.OAK_BUTTON.defaultBlockState().setValue(ButtonBlock.FACE, AttachFace.WALL).setValue(ButtonBlock.FACING,Direction.WEST), 1 | 2);
                 }
             }
             case LEVER -> {
@@ -301,14 +201,57 @@ public class BlockPlaceDefinitions {
                             serverLevel.setBlock(placingPosition, Blocks.LEVER.defaultBlockState().setValue(LeverBlock.FACE, AttachFace.FLOOR), 1 | 2);
                     case TURN_NORTH, TURN_EAST, TURN_SOUTH, TURN_WEST ->
                             serverLevel.setBlock(placingPosition, Blocks.LEVER.defaultBlockState().setValue(LeverBlock.FACE, AttachFace.WALL).setValue(LeverBlock.FACING, pointerToDir(specialDir)), 1 | 2);
-//                    case TURN_EAST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.LEVER.defaultBlockState().setValue(LeverBlock.FACE, AttachFace.WALL).setValue(LeverBlock.FACING, Direction.EAST), 1 | 2);
-//                    case TURN_SOUTH ->
-//                            serverLevel.setBlock(placingPosition, Blocks.LEVER.defaultBlockState().setValue(LeverBlock.FACE, AttachFace.WALL).setValue(LeverBlock.FACING, Direction.SOUTH), 1 | 2);
-//                    case TURN_WEST ->
-//                            serverLevel.setBlock(placingPosition, Blocks.LEVER.defaultBlockState().setValue(LeverBlock.FACE, AttachFace.WALL).setValue(LeverBlock.FACING, Direction.WEST), 1 | 2);
                 }
             }
+            case HONEY_BLOCK -> {
+                serverLevel.setBlock(placingPosition, Blocks.HONEY_BLOCK.defaultBlockState(), 1 | 2);
+            }
+            case OAK_DOOR -> {
+                if (specialDir != DirSet.TURN_UP || specialDir != DirSet.TURN_DOWN) {
+                    serverLevel.setBlock(placingPosition, Blocks.OAK_DOOR.defaultBlockState().setValue(DoorBlock.FACING, pointerToDir(specialDir)), 1 | 2);
+                } else {
+                    serverLevel.setBlock(placingPosition, Blocks.OAK_DOOR.defaultBlockState().setValue(DoorBlock.FACING, Direction.NORTH), 1 | 2);
+                }
+            }
+            case IRON_DOOR -> {
+                if (specialDir != DirSet.TURN_UP || specialDir != DirSet.TURN_DOWN) {
+                    serverLevel.setBlock(placingPosition, Blocks.IRON_DOOR.defaultBlockState().setValue(DoorBlock.FACING, pointerToDir(specialDir)), 1 | 2);
+                } else {
+                    serverLevel.setBlock(placingPosition, Blocks.IRON_DOOR.defaultBlockState().setValue(DoorBlock.FACING, Direction.NORTH), 1 | 2);
+                }
+            }
+            case NOTE_BLOCK -> {
+                serverLevel.setBlock(placingPosition, Blocks.NOTE_BLOCK.defaultBlockState(), 1 | 2);
+            }
+            case DAYLIGHT_SENSOR -> {
+                serverLevel.setBlock(placingPosition, Blocks.DAYLIGHT_DETECTOR.defaultBlockState(), 1 | 2);
+            }
+            case STONE_PRESSURE_PLATE -> {
+                serverLevel.setBlock(placingPosition, Blocks.STONE_PRESSURE_PLATE.defaultBlockState(), 1 | 2);
+            }
+            case OAK_PRESSURE_PLATE -> {
+                serverLevel.setBlock(placingPosition, Blocks.OAK_PRESSURE_PLATE.defaultBlockState(), 1 | 2);
+            }
+            case OAK_TRAPDOOR -> {
+                if (specialDir == DirSet.TURN_UP) {
+                    serverLevel.setBlock(placingPosition, Blocks.OAK_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.HALF, Half.TOP), 1 | 2);
+                } else if (specialDir == DirSet.TURN_DOWN) {
+                    serverLevel.setBlock(placingPosition, Blocks.OAK_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.HALF, Half.BOTTOM), 1 | 2);
+                }
+                serverLevel.setBlock(placingPosition, Blocks.OAK_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.FACING, pointerToDir(specialDir)).setValue(TrapDoorBlock.HALF, Half.TOP), 1 | 2);
+            }
+            case IRON_TRAPDOOR -> {
+                if (specialDir == DirSet.TURN_UP) {
+                    serverLevel.setBlock(placingPosition, Blocks.IRON_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.HALF, Half.TOP), 1 | 2);
+                } else if (specialDir == DirSet.TURN_DOWN) {
+                    serverLevel.setBlock(placingPosition, Blocks.IRON_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.HALF, Half.BOTTOM), 1 | 2);
+                }
+                serverLevel.setBlock(placingPosition, Blocks.IRON_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.FACING, pointerToDir(specialDir)).setValue(TrapDoorBlock.HALF, Half.TOP), 1 | 2);
+            }
+            case SAND -> {
+                serverLevel.setBlock(placingPosition, Blocks.SAND.defaultBlockState(), 1 | 2);
+            }
+            // fallback
             case NULL -> Minecraft.getInstance().player.sendSystemMessage(Component.literal("Error : null provided as block to place"));
         }
         AIGenPointer.isActing = false;
@@ -390,6 +333,36 @@ public class BlockPlaceDefinitions {
             }
             case "LEVER" -> {
                 return BlockSet.LEVER;
+            }
+            case "HONEY_BLOCK" -> {
+                return BlockSet.HONEY_BLOCK;
+            }
+            case "STONE_PRESSURE_PLATE" -> {
+                return BlockSet.STONE_PRESSURE_PLATE;
+            }
+            case "OAK_PRESSURE_PLATE" -> {
+                return BlockSet.OAK_PRESSURE_PLATE;
+            }
+            case "NOTE_BLOCK" -> {
+                return BlockSet.NOTE_BLOCK;
+            }
+            case "OAK_TRAPDOOR" -> {
+                return BlockSet.OAK_TRAPDOOR;
+            }
+            case "IRON_TRAPDOOR" -> {
+                return BlockSet.IRON_TRAPDOOR;
+            }
+            case "IRON_DOOR" -> {
+                return BlockSet.IRON_DOOR;
+            }
+            case "OAK_DOOR" -> {
+                return BlockSet.OAK_DOOR;
+            }
+            case "DAYLIGHT_SENSOR" -> {
+                return BlockSet.DAYLIGHT_SENSOR;
+            }
+            case "SAND" -> {
+                return BlockSet.SAND;
             }
         }
         return BlockSet.NULL;

@@ -26,7 +26,6 @@ public class AIGenPointer extends Mob {
     public static boolean isActing = false;
 
     public final AnimationState placingBlock = new AnimationState();
-    private int placingAnimTimeout = 0;
 
     @Override
     public void tick() {
@@ -60,10 +59,6 @@ public class AIGenPointer extends Mob {
     @Override
     public boolean canBeSeenByAnyone() {
         return false;
-    }
-
-    private void setupAnimationStates(){
-
     }
 
     @Override

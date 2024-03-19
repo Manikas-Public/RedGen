@@ -28,5 +28,19 @@ public enum BlockSet {
     STONE_BUTTON,
     OAK_BUTTON,
     LEVER,
+
+    // update 1.1
+    HONEY_BLOCK,
+    STONE_PRESSURE_PLATE,
+    OAK_PRESSURE_PLATE,
+    NOTE_BLOCK,
+    OAK_TRAPDOOR,
+    IRON_TRAPDOOR,
+    IRON_DOOR,
+    OAK_DOOR,
+    DAYLIGHT_SENSOR,
+    SAND,
+
+    // null fallback value
     NULL
 }
