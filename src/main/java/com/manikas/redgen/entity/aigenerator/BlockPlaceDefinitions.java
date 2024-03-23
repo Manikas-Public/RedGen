@@ -74,9 +74,10 @@ public class BlockPlaceDefinitions {
                 switch (specialDir) {
                     case TURN_UP, TURN_DOWN ->
                             serverLevel.setBlock(placingPosition, Blocks.REDSTONE_TORCH.defaultBlockState(), 1 | 2);
-                    case TURN_NORTH ->
+                    case TURN_NORTH, TURN_EAST, TURN_SOUTH, TURN_WEST ->
                             serverLevel.setBlock(placingPosition, Blocks.REDSTONE_WALL_TORCH.defaultBlockState().setValue(RedstoneWallTorchBlock.FACING, pointerToDir(specialDir)), 1 | 2);
                 }
+                serverLevel.setBlock(placingPosition, Blocks.REDSTONE_TORCH.defaultBlockState(), 1 | 2);
             }
             case OBSERVER -> {
                 serverLevel.setBlock(placingPosition, Blocks.OBSERVER.defaultBlockState().setValue(ObserverBlock.FACING, pointerToDir(specialDir)), 1 | 2);
@@ -238,7 +239,7 @@ public class BlockPlaceDefinitions {
                 } else if (specialDir == DirSet.TURN_DOWN) {
                     serverLevel.setBlock(placingPosition, Blocks.OAK_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.HALF, Half.BOTTOM), 1 | 2);
                 }
-                serverLevel.setBlock(placingPosition, Blocks.OAK_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.FACING, pointerToDir(specialDir)).setValue(TrapDoorBlock.HALF, Half.TOP), 1 | 2);
+                serverLevel.setBlock(placingPosition, Blocks.OAK_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.HALF, Half.TOP), 1 | 2);
             }
             case IRON_TRAPDOOR -> {
                 if (specialDir == DirSet.TURN_UP) {
@@ -246,7 +247,7 @@ public class BlockPlaceDefinitions {
                 } else if (specialDir == DirSet.TURN_DOWN) {
                     serverLevel.setBlock(placingPosition, Blocks.IRON_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.HALF, Half.BOTTOM), 1 | 2);
                 }
-                serverLevel.setBlock(placingPosition, Blocks.IRON_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.FACING, pointerToDir(specialDir)).setValue(TrapDoorBlock.HALF, Half.TOP), 1 | 2);
+                serverLevel.setBlock(placingPosition, Blocks.IRON_TRAPDOOR.defaultBlockState().setValue(TrapDoorBlock.HALF, Half.TOP), 1 | 2);
             }
             case SAND -> {
                 serverLevel.setBlock(placingPosition, Blocks.SAND.defaultBlockState(), 1 | 2);

@@ -69,8 +69,11 @@ public class ActionDefinitions {
                 selectedDir = DirSet.TURN_SOUTH;
             case TURN_WEST ->
                 selectedDir = DirSet.TURN_WEST;
-            case PLACE ->
-                BlockPlaceDefinitions.placeBlock(selectedDir,selectedPlaceable, pointerEntity, levelForPlacing);
+            case PLACE -> {
+                if (selectedPlaceable != BlockSet.NULL) {
+                    BlockPlaceDefinitions.placeBlock(selectedDir, selectedPlaceable, pointerEntity, levelForPlacing);
+                }
+            }
         }
     }
 
